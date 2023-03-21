@@ -36,28 +36,12 @@ def export_mpl(filepath, mkdir=True, close=True):
 config = import_json("./config.json")
 
 
-################################################################################
-# PLOTTING
-################################################################################
-
-
-def cmap2hex(cmap, n_intervals) -> list:
-    if isinstance(cmap, str):
-        if (cmap := cc.cm.get(cmap)) is None:
-            try:
-                cmap = plt.get_cmap(cmap)
-            except ValueError as e:
-                raise e
-    assert isinstance(cmap, plt.matplotlib.colors.LinearSegmentedColormap)
-    stops = [ 0 + x*1/(n_intervals-1) for x in range(n_intervals) ] # np.linspace
-    hex_codes = []
-    for s in stops:
-        assert isinstance(s, float)
-        rgb_floats = cmap(s)
-        rgb_ints = [ round(f*255) for f in rgb_floats ]
-        hex_code = "#{0:02x}{1:02x}{2:02x}".format(*rgb_ints)
-        hex_codes.append(hex_code)
-    return hex_codes
+def get_participant_list(dataset):
+    """Return a list of available participants."""
+    root_dir = Path(config["root_dir"])
+    dataset_dir = root_dir / "derivatives" / dataset
+    participants = [f.name for f in dataset_dir.iterdir() if f.is_dir()]
+    return [int(p.split("-")[1]) for p in participants]
 
 def set_matplotlib_style(mpl_style="technical"):
     if mpl_style == "technical":

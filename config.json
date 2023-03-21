@@ -1,3 +1,10 @@
 {
-    "root_dir": "../"
+
+    "root_dir": "../",
+
+    "datasets": [
+        "antony2018classy",
+        "antony2018tonehero"
+    ]
+
 }
