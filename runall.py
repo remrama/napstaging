@@ -15,11 +15,13 @@ def run_command(command):
         sys.exit()
 
 
-for d in (pbar := tqdm(utils.config["datasets"])):
-    pbar.set_description(d)
+for d in tqdm(utils.config["datasets"], desc="Staging"):
     calc_command = f"python calc-hypnograms.py --dataset {d}"
     run_command(calc_command)
     participants = utils.get_participant_list(d)
     for p in tqdm(participants, leave=False):
         plot_command = f"python plot-hypnogram.py --dataset {d} --participant {p}"
         run_command(plot_command)
+
+run_command("python plot-accuracy.py")
+run_command("python plot-heatmap.py")

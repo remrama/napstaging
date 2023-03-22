@@ -45,9 +45,9 @@ elif dataset == "konkoly202Xalpha":
 epoch_length = 30
 
 if dataset.startswith("antony2018"):
-    channels = dict(eeg_channel="EEG 000")
+    channels = dict(eeg_name="EEG 010")
 elif dataset == "konkoly202Xalpha":
-    channels = dict(eeg_channel="C4", eog_channel="R-HEOG", emg_channel="EMG")
+    channels = dict(eeg_name="C4", eog_name="R-HEOG", emg_name="EMG")
 
 # Loop over each EEG file, get human hypnogram, and generate YASA hypnogram.
 for fp in tqdm(list(filepaths), desc=dataset, leave=False):
@@ -92,7 +92,7 @@ for fp in tqdm(list(filepaths), desc=dataset, leave=False):
         raise ValueError(f"Unexpected EEG filetype: {fp.suffix}")
 
     # Drop to the only channels needed for staging.
-    raw.pick([eeg_channel])
+    raw.pick([channels["eeg_name"]])
     # Load data.
     raw.load_data()
     # Downsample to 100 Hz.
