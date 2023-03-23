@@ -36,17 +36,18 @@ true = df["human"].to_numpy()
 pred = df["yasa"].to_numpy()
 
 labels = ["W", "N1", "N2", "N3", "R"]
-plot_labels = ["Wake", "N1", "N2", "N3", "REM"]
-cm = confusion_matrix(true, pred, labels=labels)
+plot_labels = ["Wake", "N1", "N2", "SWS", "REM"]
+cm = confusion_matrix(true, pred, labels=labels, normalize="true")
 cm = pd.DataFrame(cm,
     index=pd.Index(plot_labels, name="Human"),
     columns=pd.Index(plot_labels, name="YASA"),
 )
+cm = cm.multiply(100)
 
 fig, ax = plt.subplots(figsize=(3.5, 3), constrained_layout=True)
 
 sns.heatmap(cm,
-    ax=ax, square=True, cmap="viridis", annot=True, fmt=".0f", linewidth=0.5,
+    ax=ax, square=True, cmap=cc.cm.blues, annot=True, fmt=".0f", linewidth=0.5,
 )
 
 

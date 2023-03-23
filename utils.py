@@ -45,11 +45,11 @@ def get_participant_list(dataset):
 
 def set_matplotlib_style(mpl_style="technical"):
     if mpl_style == "technical":
-        plt.rcParams["savefig.dpi"] = 600
-        plt.rcParams["interactive"] = True
+        plt.rcParams["savefig.dpi"] = 1000
+        # plt.rcParams["interactive"] = True
         plt.rcParams["figure.constrained_layout.use"] = True
-        plt.rcParams["font.family"] = "Times New Roman"
-        # plt.rcParams["font.sans-serif"] = "Arial"
+        # plt.rcParams["font.family"] = "Times New Roman"
+        plt.rcParams["font.sans-serif"] = "Arial"
         plt.rcParams["mathtext.fontset"] = "custom"
         plt.rcParams["mathtext.rm"] = "Times New Roman"
         plt.rcParams["mathtext.cal"] = "Times New Roman"

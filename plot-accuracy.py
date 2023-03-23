@@ -30,6 +30,12 @@ for d in datasets:
 
 df = pd.concat(dataframe_list, ignore_index=True)
 
+df["dataset"] = df["dataset"].replace(
+    {
+        "antony2018classy": "AntonyCurrBio",
+        "antony2018tonehero": "AntonyNLM",
+    }
+)
 
 def scorer(df):
     t, p = zip(*df.values)  # Same as (df["col1"], df["col2"]) but teensy bit faster
@@ -51,6 +57,8 @@ subjs = df.groupby(["dataset", "participant_id"])[["human", "yasa"]].apply(score
 dsets = subjs.groupby("dataset").agg(["mean", "sem"]).stack(0).rename_axis(["dataset", "metric"])
 
 
+color = cc.cm.blues(1.)
+
 fig, ax = plt.subplots(figsize=(3, 3), constrained_layout=True)
 ax = sns.boxplot(
     ax=ax,
@@ -58,8 +66,10 @@ ax = sns.boxplot(
     x="dataset",
     y="accuracy",
     notch=True,
-    color="cornflowerblue",
+    color=color,
     saturation=1,
+    linewidth=1,
+    width=0.6,
 )
 ax.set_ybound(upper=1)
 ax.set_xlabel("Dataset")

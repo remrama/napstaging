@@ -67,7 +67,7 @@ step_kwargs = {
 times = df["duration"].multiply(df["epoch"]).to_numpy()
 times = times / 60
 
-figsize = (5, 2)
+figsize = (4, 2)
 
 fig, (ax0, ax1) = plt.subplots(
     nrows=2,
@@ -78,7 +78,7 @@ fig, (ax0, ax1) = plt.subplots(
 )
 
 # Overlay YASA and human hypnograms.
-for scorer in ["yasa", "human"]:
+for scorer in ["human", "yasa"]:
     values = df[scorer].map(plot_order.index).to_numpy()
     # values_rem = np.ma.masked_not_equal(values, plot_order.index("R"))
     ax0.step(times, values, **step_kwargs[scorer])
@@ -106,13 +106,13 @@ ax1.xaxis.set_minor_locator(plt.MultipleLocator(5))
 ax1.grid(which="minor", axis="y")
 
 ax0.legend(
-    # title="Scorer",
-    loc="upper left",
-    bbox_to_anchor=(1, 1),
+    title="Scorer",
+    loc="upper center",
+    bbox_to_anchor=(0.5, 1.2),
     borderaxespad=0,
     labelspacing=.01,
-    ncol=1,
-    fontsize=6,
+    ncol=2,
+    # fontsize=6,
 )
 legend_handles = [
     plt.matplotlib.patches.Patch(
